@@ -2365,3 +2365,38 @@ cmake-template/
 ---
 
 **END OF EXECUTION PLAN**
+---
+
+### DAY 8: CI/CD HARDENING (2 hours)
+
+**Morning (1 hour): Automated Releases & Docs**
+Added `release.yml` and `docs.yml` workflows to automate GitHub Releases and API documentation hosting.
+
+**Afternoon (1 hour): Validation Pipeline Integration**
+Integrated `scripts/validate.sh` into the CI suite to ensure environmental parity between local dev and GitHub Actions.
+
+---
+
+### DAY 9: PRODUCTION REFINEMENTS (3 hours)
+
+**Morning (1.5 hours): Hierarchical Includes & Unity Builds**
+Refactored include directories to use the `myproject/` prefix, standardizing internal and external include syntax. Activated Unity builds for core modules.
+
+**Afternoon (1.5 hours): Target-Level Warnings**
+Isolated strict internal warnings to project targets only, preventing build breaks in 3rd-party dependencies like Google Benchmark.
+
+---
+
+## COMPLETION CHECKLIST (FINAL V2)
+
+| Feature | Status | Verified |
+|---------|--------|----------|
+| Hierarchical Includes | ✅ | Day 9 |
+| Target-Level Warnings | ✅ | Day 9 |
+| Automated Releases | ✅ | Day 8 |
+| GitHub Pages Docs | ✅ | Day 8 |
+| Unity Builds | ✅ | Day 9 |
+
+---
+
+**END OF EXECUTION PLAN V2**
