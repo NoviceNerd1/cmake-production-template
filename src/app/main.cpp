@@ -1,5 +1,5 @@
-#include "core/version.h"
-#include "network/server.h"
+#include "myproject/core/version.h"
+#include "myproject/network/server.h"
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 #include <iostream>

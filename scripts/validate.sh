@@ -10,12 +10,13 @@ run_step() {
     local desc="$1"; shift
     echo ""
     echo ">>> $desc"
+    # Use || true to prevent set -e from killing the script on ((VAR++)) return 1
     if "$@"; then
         echo "    [PASS] $desc"
-        ((PASS++))
+        PASS=$((PASS + 1))
     else
         echo "    [FAIL] $desc"
-        ((FAIL++))
+        FAIL=$((FAIL + 1))
     fi
 }
 
@@ -33,16 +34,22 @@ run_step "Release build" bash -c "
     cmake --preset release &&
     cmake --build --preset release"
 
-# Step 3: Examples
+# Step 3: Examples build
 run_step "Examples build" bash -c "
     cmake -B build/examples --preset dev -DBUILD_EXAMPLES=ON &&
     cmake --build build/examples"
 
-# Step 4: Install
+# Step 4: Benchmarks build & run
+run_step "Benchmarks build & run" bash -c "
+    cmake -B build/benchmarks --preset dev -DBUILD_BENCHMARKS=ON &&
+    cmake --build build/benchmarks &&
+    ctest --test-dir build/benchmarks -L benchmark --output-on-failure"
+
+# Step 5: Install
 run_step "Install to test-install/" bash -c "
     cmake --install build/release --prefix '$ROOT/test-install'"
 
-# Step 5: Packaging
+# Step 6: Packaging
 run_step "CPack tarball" bash -c "
     cpack --config '$ROOT/build/release/CPackConfig.cmake' \
           -B '$ROOT/build/release/packages'"
@@ -51,4 +58,7 @@ echo ""
 echo "========================================"
 echo "Results: ${PASS} passed, ${FAIL} failed"
 echo "========================================"
-[ "$FAIL" -eq 0 ]
+
+if [ "$FAIL" -gt 0 ]; then
+    exit 1
+fi

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "core/version.h"
-#include "core/types.h"
+#include "myproject/core/version.h"
+#include "myproject/core/types.h"
 
 // ---------------------------------------------------------------------------
 // Version tests

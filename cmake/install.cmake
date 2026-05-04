@@ -18,12 +18,12 @@ install(TARGETS myapp core network
 #-----------------------------------------------------------------------------
 # Public Headers
 #-----------------------------------------------------------------------------
-install(DIRECTORY src/core/include/
+install(DIRECTORY src/core/include/myproject/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/myproject
     FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
 )
 
-install(DIRECTORY src/network/include/
+install(DIRECTORY src/network/include/myproject/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/myproject
     FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
 )

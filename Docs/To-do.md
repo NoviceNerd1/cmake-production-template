@@ -12,50 +12,53 @@
 - [x] **Presets**: `CMakePresets.json` with `dev`, `dev-asan`, `release`, and `ci` configurations.
 - [x] **Compiler Module**: Hardened flags for GCC, Clang, and MSVC.
 - [x] **Sanitizers**: Integrated ASAN, UBSAN, and TSAN support.
-- [x] **Optimization**: LTO/IPO, Unity Builds, and Precompiled Headers (PCH) support.
+- [x] **LTO/IPO**: Link-time optimization enabled globally in `compiler.cmake`.
+- [x] **Project Initializer**: Created `scripts/init_project.sh` with cross-platform `sed` support.
+- [x] **Unity Builds**: Integrated and activated for `core` and `network` libraries.
 
 ### 2. Platform & Logic
 - [x] **Platform Detection**: Automatic detection of OS (Linux, macOS, Windows) and architecture.
 - [x] **I/O Backends**: Detection for `epoll` (Linux) and `kqueue` (macOS).
 - [x] **Dependency Management**: Hybrid "find-or-fetch" strategy (fmt, spdlog, benchmark).
-- [x] **Testing Framework**: Hard-locked GoogleTest via FetchContent for reproducibility.
-- [x] **Core Utility Macros**: `add_project_library` and `add_project_executable` with automatic namespace aliasing.
-- [x] **Project Initializer**: Created `scripts/init_project.sh` to automatically rebrand the template for new projects.
+- [x] **Testing Framework**: Hard-locked GoogleTest via FetchContent.
+- [x] **Core Utility Macros**: `add_project_library` and `add_project_executable` with namespace aliasing.
 
 ### 3. Source & Distribution
 - [x] **Modular Source**: Implementation of `core`, `network`, and `app` targets.
 - [x] **Unit Testing**: Modular tests for all libraries (`tests/`).
 - [x] **Benchmarking**: Micro-benchmarks implemented using Google Benchmark (`benchmarks/`).
-- [x] **Examples**: Standalone usage demonstration (`examples/`).
 - [x] **Installation**: Standard GNU layout (`GNUInstallDirs`) with CMake package exports.
 - [x] **Packaging**: CPack configuration for TGZ, DEB, and RPM.
 
 ### 4. CI/CD & Automation
-- [x] **Validation Suite**: Local pipeline emulation via `scripts/validate.sh`.
-- [x] **Continuous Integration**: GitHub Actions matrix build (Ubuntu/macOS) with ASAN and Coverage.
-- [x] **Automated Releases**: Workflow to build, package, and create GitHub Releases on tag push (`v*`).
-- [x] **Auto-Documentation**: GitHub Pages deployment for Doxygen API docs on push to `main`.
+- [x] **Validation Suite**: Local pipeline emulation via `scripts/validate.sh` (includes Benchmark checks).
+- [x] **Continuous Integration**: GitHub Actions matrix build with ASAN and Coverage.
+- [x] **Automated Releases**: Workflow to build, package, and create GitHub Releases on tag.
+- [x] **Auto-Documentation**: GitHub Pages deployment for API docs.
 
 ---
 
-## 🛠 To-be-Implemented (Roadmap)
+## 🛠 To-be-Improved (Refinement Phase)
 
-### Priority 1: Project Tooling
-- [ ] **Codegen Content**: Populate `tools/codegen` with a sample Python script for generating boilerplate (e.g., error codes).
-- [ ] **Debug Helpers**: Populate `tools/debug` with `.gdbinit` or `.lldbinit` optimized for the project structure.
+### 1. Build System Polish
+- [ ] **Activate PCH**: Call `target_enable_pch()` in `src/CMakeLists.txt` for stable headers.
+- [ ] **Standardize Include Prefixes**: Refactor source structure to use `include/myproject/...` so that internal and external `#include` statements are identical (e.g. `<myproject/core/version.h>`).
+- [ ] **Static Analysis Integration**: Hook `ENABLE_CLANG_TIDY` and `ENABLE_CPPCHECK` into targets via `set_target_properties`.
 
-### Priority 2: Advanced Build Features
-- [ ] **Package Manager Integration**: Add formal support for `vcpkg` or `Conan` in `cmake/dependencies.cmake`.
-- [ ] **Cross-Compilation**: Add toolchain files for ARM/Embedded targets.
-- [ ] **PGO Automation**: Implement a two-pass build workflow for Profile-Guided Optimization.
-
-### Priority 3: Aesthetics & UX
-- [ ] **Premium Doxygen**: Add custom CSS/HTML header to Doxygen for a modern, branded look (currently uses default FOREST).
-- [ ] **Build Timing**: Add a post-build hook to report time spent in different build stages (as per Plan 17.3).
+### 2. Documentation & Quality
+- [ ] **Premium Doxygen Styling**: Integrate a modern CSS theme (like [m.css](https://mcss.mosra.cz/)) for a more professional API reference.
+- [ ] **Warning Hygiene**: Audit remaining `AppleClang` warnings in GoogleTest headers (already suppressed in some places).
 
 ---
 
-## 📈 Long-Term Evolution (Months 10-12)
-- [ ] **Bazel Migration Guide**: Documentation for transitioning to Bazel for monorepo scale.
-- [ ] **Multi-CI Support**: Add templates for GitLab CI and Azure DevOps pipelines.
-- [ ] **CUDA Support**: Optional integration for high-performance GPU compute modules.
+## 🚀 New Features (Advanced Phase)
+
+### 1. Tooling & Productivity
+- [ ] **Codegen Content**: Implement a sample Python generator in `tools/codegen` for automated boilerplate (e.g., error codes).
+- [ ] **Debug Pretty-Printers**: Add GDB/LLDB scripts in `tools/debug` for visualizing project-specific types.
+- [ ] **Automated Versioning**: Script to bump version in `CMakeLists.txt` and create a git tag.
+
+### 2. Roadmap Features
+- [ ] **Package Manager Support**: Formalize integration for `vcpkg` and `Conan`.
+- [ ] **Cross-Compilation**: Add toolchain profiles for ARM/Embedded targets.
+- [ ] **PGO Workflow**: Add a preset for Profile-Guided Optimization builds.

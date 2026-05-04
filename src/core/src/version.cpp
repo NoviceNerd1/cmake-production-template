@@ -1,4 +1,4 @@
-#include "core/version.h"
+#include "myproject/core/version.h"
 
 namespace myproject {
 

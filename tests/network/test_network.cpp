@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "network/server.h"
+#include "myproject/network/server.h"
 
 // ---------------------------------------------------------------------------
 // Server construction / state tests

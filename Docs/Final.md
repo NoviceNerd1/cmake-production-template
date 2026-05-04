@@ -1,0 +1,1 @@
+# This document is the definitive, end-to-end technical breakdown of the project. It covers every architectural decision, data structure, and resilience pattern from the ground up.
