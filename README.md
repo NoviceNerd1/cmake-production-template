@@ -163,6 +163,18 @@ ls build/release/packages/
 ```
 
 ---
+---
+
+## CI/CD & Automation
+
+The repository includes a comprehensive GitHub Actions suite:
+
+- **CI (`ci.yml`)**: Matrix builds on Linux and macOS, testing across Debug/Release, AddressSanitizer checks, and code coverage reporting.
+- **Releases (`release.yml`)**: Automatically generates a GitHub Release and uploads packaged binaries (`.tar.gz`) whenever a version tag (e.g., `v1.0.0`) is pushed.
+- **Documentation (`docs.yml`)**: Automatically builds Doxygen API docs and publishes them to GitHub Pages on every push to `main`.
+- **Validation**: Every CI run performs a full pipeline validation using `scripts/validate.sh`, emulating the local developer experience.
+
+---
 
 ## License
 
