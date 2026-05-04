@@ -37,9 +37,9 @@ function(add_gtest TEST_NAME)
     )
 
     target_include_directories(${TEST_NAME} PRIVATE
-        "${CMAKE_SOURCE_DIR}/tests"
-        "${CMAKE_SOURCE_DIR}/include"
-        "${CMAKE_BINARY_DIR}/generated"
+        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/tests>"
+        "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/generated>"
     )
 
     target_compile_features(${TEST_NAME} PRIVATE cxx_std_20)

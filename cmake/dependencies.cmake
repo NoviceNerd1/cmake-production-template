@@ -60,28 +60,23 @@ endmacro()
 
 #=============================================================================
 # GoogleTest — unit testing framework (only when BUILD_TESTING)
+# We always fetch GTest from source to guarantee static linking and avoid
+# rpath / ABI issues with system-installed dylibs (e.g. conda on macOS).
 #=============================================================================
 macro(find_or_fetch_gtest)
     if(BUILD_TESTING)
-        find_package(GTest CONFIG QUIET)
-        if(GTest_FOUND)
-            message(STATUS "GTest: ${GTest_VERSION} (system)")
-            add_library(MyProject::gtest      ALIAS GTest::gtest)
-            add_library(MyProject::gtest_main ALIAS GTest::gtest_main)
-        else()
-            message(STATUS "GTest: not found — fetching v1.14.0 from GitHub")
-            FetchContent_Declare(
-                googletest
-                GIT_REPOSITORY https://github.com/google/googletest.git
-                GIT_TAG        v1.14.0
-                GIT_SHALLOW    TRUE
-            )
-            # Prevent GTest from installing itself into our prefix
-            set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
-            FetchContent_MakeAvailable(googletest)
-            add_library(MyProject::gtest      ALIAS gtest)
-            add_library(MyProject::gtest_main ALIAS gtest_main)
-        endif()
+        message(STATUS "GTest: fetching v1.14.0 from GitHub (always built from source)")
+        set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)   # MSVC compat
+        FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG        v1.14.0
+            GIT_SHALLOW    TRUE
+        )
+        FetchContent_MakeAvailable(googletest)
+        add_library(MyProject::gtest      ALIAS gtest)
+        add_library(MyProject::gtest_main ALIAS gtest_main)
     endif()
 endmacro()
 

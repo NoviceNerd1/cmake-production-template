@@ -107,8 +107,7 @@
       "name": "ci",
       "configurePreset": "ci",
       "output": {
-        "outputOnFailure": true,
-        "verbosity": "detailed"
+        "outputOnFailure": true
       }
     }
   ]

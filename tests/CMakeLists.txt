@@ -3,10 +3,9 @@
 # Uses add_gtest() from cmake/testing.cmake (included by root).
 #=============================================================================
 
-# Smoke / integration tests
+# Smoke / integration tests (no external deps needed)
 add_gtest(test_smoke
     test_smoke.cpp
-    DEPENDENCIES MyProject::fmt
     TIMEOUT      30
     LABELS       "smoke"
 )

@@ -35,17 +35,27 @@ function(add_project_library TARGET_NAME)
         add_library(${TARGET_NAME} STATIC ${LIB_SOURCES})
     endif()
 
-    # Include directories
+    # Include directories — must use generator expressions for installable targets
     if(LIB_PUBLIC_INCLUDES)
-        target_include_directories(${TARGET_NAME} PUBLIC ${LIB_PUBLIC_INCLUDES})
+        foreach(_dir ${LIB_PUBLIC_INCLUDES})
+            target_include_directories(${TARGET_NAME} PUBLIC
+                "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_dir}>"
+                "$<INSTALL_INTERFACE:include>"
+            )
+        endforeach()
     endif()
     if(LIB_PRIVATE_INCLUDES)
-        target_include_directories(${TARGET_NAME} PRIVATE ${LIB_PRIVATE_INCLUDES})
+        foreach(_dir ${LIB_PRIVATE_INCLUDES})
+            target_include_directories(${TARGET_NAME} PRIVATE
+                "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_dir}>"
+            )
+        endforeach()
     endif()
 
-    # Always make the generated header directory available
+    # Generated config header — available during build only
     target_include_directories(${TARGET_NAME} PUBLIC
-        "${CMAKE_BINARY_DIR}/generated"
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/generated>"
+        "$<INSTALL_INTERFACE:include/myproject>"
     )
 
     # Link libraries
@@ -76,12 +86,16 @@ function(add_project_executable TARGET_NAME)
     add_executable(${TARGET_NAME} ${EXE_SOURCES})
 
     if(EXE_INCLUDES)
-        target_include_directories(${TARGET_NAME} PRIVATE ${EXE_INCLUDES})
+        foreach(_dir ${EXE_INCLUDES})
+            target_include_directories(${TARGET_NAME} PRIVATE
+                "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${_dir}>"
+            )
+        endforeach()
     endif()
 
-    # Always make the generated header directory available
+    # Generated config header
     target_include_directories(${TARGET_NAME} PRIVATE
-        "${CMAKE_BINARY_DIR}/generated"
+        "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/generated>"
     )
 
     if(EXE_DEPENDENCIES)
