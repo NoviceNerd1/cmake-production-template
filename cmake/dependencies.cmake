@@ -17,7 +17,7 @@ find_package(Threads REQUIRED)
 add_library(MyProject::Threads ALIAS Threads::Threads)
 
 #=============================================================================
-# fmt — string formatting library
+# fmt --- string formatting library
 #=============================================================================
 macro(find_or_fetch_fmt)
     find_package(fmt CONFIG QUIET)
@@ -25,7 +25,7 @@ macro(find_or_fetch_fmt)
         message(STATUS "fmt: ${fmt_VERSION} (system)")
         add_library(MyProject::fmt ALIAS fmt::fmt)
     else()
-        message(STATUS "fmt: not found — fetching v10.2.1 from GitHub")
+        message(STATUS "fmt: not found --- fetching v10.2.1 from GitHub")
         FetchContent_Declare(
             fmt
             GIT_REPOSITORY https://github.com/fmtlib/fmt.git
@@ -38,7 +38,7 @@ macro(find_or_fetch_fmt)
 endmacro()
 
 #=============================================================================
-# spdlog — fast logging library  (uses fmt internally)
+# spdlog --- fast logging library  (uses fmt internally)
 #=============================================================================
 macro(find_or_fetch_spdlog)
     find_package(spdlog CONFIG QUIET)
@@ -46,7 +46,7 @@ macro(find_or_fetch_spdlog)
         message(STATUS "spdlog: ${spdlog_VERSION} (system)")
         add_library(MyProject::spdlog ALIAS spdlog::spdlog)
     else()
-        message(STATUS "spdlog: not found — fetching v1.14.1 from GitHub")
+        message(STATUS "spdlog: not found --- fetching v1.14.1 from GitHub")
         FetchContent_Declare(
             spdlog
             GIT_REPOSITORY https://github.com/gabime/spdlog.git
@@ -59,7 +59,7 @@ macro(find_or_fetch_spdlog)
 endmacro()
 
 #=============================================================================
-# GoogleTest — unit testing framework (only when BUILD_TESTING)
+# GoogleTest --- unit testing framework (only when BUILD_TESTING)
 # We always fetch GTest from source to guarantee static linking and avoid
 # rpath / ABI issues with system-installed dylibs (e.g. conda on macOS).
 #=============================================================================
@@ -81,7 +81,7 @@ macro(find_or_fetch_gtest)
 endmacro()
 
 #=============================================================================
-# Google Benchmark — performance micro-benchmarks (only when BUILD_BENCHMARKS)
+# Google Benchmark --- performance micro-benchmarks (only when BUILD_BENCHMARKS)
 #=============================================================================
 macro(find_or_fetch_benchmark)
     if(BUILD_BENCHMARKS)
@@ -91,7 +91,7 @@ macro(find_or_fetch_benchmark)
             add_library(MyProject::benchmark      ALIAS benchmark::benchmark)
             add_library(MyProject::benchmark_main ALIAS benchmark::benchmark_main)
         else()
-            message(STATUS "benchmark: not found — fetching v1.8.3 from GitHub")
+            message(STATUS "benchmark: not found --- fetching v1.8.3 from GitHub")
             set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
             FetchContent_Declare(
                 googlebenchmark
@@ -107,7 +107,7 @@ macro(find_or_fetch_benchmark)
 endmacro()
 
 #=============================================================================
-# OpenSSL — cryptography (optional)
+# OpenSSL --- cryptography (optional)
 #=============================================================================
 macro(find_or_fetch_openssl)
     find_package(OpenSSL QUIET)
@@ -117,13 +117,13 @@ macro(find_or_fetch_openssl)
         add_library(MyProject::crypto ALIAS OpenSSL::Crypto)
         set(MyProject_HAVE_SSL TRUE)
     else()
-        message(STATUS "OpenSSL: not found — SSL support disabled")
+        message(STATUS "OpenSSL: not found --- SSL support disabled")
         set(MyProject_HAVE_SSL FALSE)
     endif()
 endmacro()
 
 #=============================================================================
-# zlib — compression (optional)
+# zlib --- compression (optional)
 #=============================================================================
 macro(find_or_fetch_zlib)
     find_package(ZLIB QUIET)
@@ -132,7 +132,7 @@ macro(find_or_fetch_zlib)
         add_library(MyProject::zlib ALIAS ZLIB::ZLIB)
         set(MyProject_HAVE_ZLIB TRUE)
     else()
-        message(STATUS "ZLIB: not found — compression disabled")
+        message(STATUS "ZLIB: not found --- compression disabled")
         set(MyProject_HAVE_ZLIB FALSE)
     endif()
 endmacro()

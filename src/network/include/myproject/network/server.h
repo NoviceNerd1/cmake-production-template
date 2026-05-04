@@ -10,7 +10,7 @@ namespace myproject {
 class Server {
 public:
     /// Construct a server that will listen on \p port.
-    explicit Server(int port);
+    explicit Server(uint16_t port);
     ~Server();
 
     // Non-copyable, non-movable (owns OS resources)
@@ -20,20 +20,20 @@ public:
     Server& operator=(Server&&)      = delete;
 
     /// Start listening.  Returns true on success.
-    bool start();
+    [[nodiscard]] bool start();
 
     /// Gracefully stop the server.
     void stop();
 
     /// Returns the port number this server is listening on.
-    [[nodiscard]] int  get_port()    const noexcept { return port_;    }
+    [[nodiscard]] uint16_t get_port()    const noexcept { return port_;    }
     /// Returns true if the server is currently running.
-    [[nodiscard]] bool is_running()  const noexcept { return running_; }
+    [[nodiscard]] bool     is_running()  const noexcept { return running_; }
 
 private:
-    int  port_;
-    int  listen_fd_;
-    bool running_;
+    uint16_t port_;
+    int      listen_fd_;
+    bool     running_;
 };
 
 } // namespace myproject

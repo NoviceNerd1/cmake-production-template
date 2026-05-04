@@ -1,4 +1,5 @@
 #pragma once
+#include <string_view>
 #include "config.h"
 
 /// \file version.h
@@ -13,12 +14,12 @@ inline constexpr int VersionMinor = MyProject_VERSION_MINOR;
 inline constexpr int VersionPatch = MyProject_VERSION_PATCH;
 
 /// Full semver string, e.g. "1.0.0".
-inline constexpr const char* VersionString = MyProject_VERSION;
+inline constexpr std::string_view VersionString = MyProject_VERSION;
 
 /// Git commit hash at build time.
-inline constexpr const char* GitHash = MyProject_GIT_COMMIT_HASH;
+inline constexpr std::string_view GitHash = MyProject_GIT_COMMIT_HASH;
 
 /// Returns the full version string (runtime accessor).
-const char* get_version() noexcept;
+[[nodiscard]] std::string_view get_version() noexcept;
 
 } // namespace myproject

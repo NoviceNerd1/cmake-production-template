@@ -1,4 +1,4 @@
-# BUILD SYSTEM — CMAKE PRODUCTION TEMPLATE
+# BUILD SYSTEM  CMAKE PRODUCTION TEMPLATE
 ## COMPLETE HIGH-LEVEL & LOW-LEVEL DESIGN FOR REUSABLE C++ PROJECTS
 
 ---
@@ -281,10 +281,10 @@ graph TB
 
 | Pattern | Pros | Cons | Decision |
 |---------|------|------|----------|
-| **Single monolithic CMakeLists.txt** | Simple, visible | Unmaintainable >50 targets | ❌ Rejected |
-| **Superbuild (ExternalProject)** | Isolated deps | Slow, complex transitive deps | ❌ Rejected |
-| **Recursive add_subdirectory** | Modular, ownership | Hard to manage global options | ✅ Selected |
-| **Generated CMake (Python script)** | Flexible | Non-standard, debugging nightmare | ❌ Rejected |
+| **Single monolithic CMakeLists.txt** | Simple, visible | Unmaintainable >50 targets | [FAIL] Rejected |
+| **Superbuild (ExternalProject)** | Isolated deps | Slow, complex transitive deps | [FAIL] Rejected |
+| **Recursive add_subdirectory** | Modular, ownership | Hard to manage global options | [PASS] Selected |
+| **Generated CMake (Python script)** | Flexible | Non-standard, debugging nightmare | [FAIL] Rejected |
 
 ### 5.4 Tradeoff Analysis
 
@@ -333,7 +333,7 @@ flowchart TB
     end
     
     subgraph "Build System Generation"
-        BENCH --> CONFIG_H[configure_file(config.h.in<br/>→ config.h)]
+        BENCH --> CONFIG_H[configure_file(config.h.in<br/> config.h)]
         CONFIG_H --> INSTALL[include(cmake/install.cmake)]
         INSTALL --> CPACK[include(CPack.cmake)]
         CPACK --> GENERATE[Generate build.ninja/Makefile]
@@ -456,93 +456,93 @@ graph TB
 
 ```
 project-root/
-├── CMakeLists.txt                    # Root orchestrator
-├── CMakePresets.json                 # Configuration presets
-├── .gitignore                        # Git ignore
-├── README.md                         # Project documentation
-├── LICENSE                           # License file
-│
-├── cmake/                            # CMake modules
-│   ├── compiler.cmake                # Compiler detection & flags
-│   ├── options.cmake                 # Feature options
-│   ├── dependencies.cmake            # External dependencies
-│   ├── testing.cmake                 # CTest integration
-│   ├── install.cmake                 # Installation rules
-│   ├── Utils.cmake                   # Helper macros
-│   ├── toolchain.cmake               # Platform detection
-│   ├── FindModules/                  # Custom find_package modules
-│   │   ├── FindCustomLib.cmake
-│   │   └── FindOtherLib.cmake
-│   └── CPack/                        # Packaging configurations
-│       ├── CPackOptions.cmake
-│       └── CPackConfig.cmake
-│
-├── src/                              # Source code
-│   ├── CMakeLists.txt                # Sources root
-│   ├── core/                         # Core module
-│   │   ├── CMakeLists.txt
-│   │   ├── include/
-│   │   │   └── core/
-│   │   │       ├── api.h
-│   │   │       └── types.h
-│   │   └── src/
-│   │       ├── api.cpp
-│   │       └── types.cpp
-│   ├── network/                      # Network module
-│   │   ├── CMakeLists.txt
-│   │   ├── include/network/
-│   │   │   ├── server.h
-│   │   │   └── client.h
-│   │   └── src/
-│   │       ├── server.cpp
-│   │       └── client.cpp
-│   └── app/                          # Main executable
-│       ├── CMakeLists.txt
-│       └── main.cpp
-│
-├── include/                          # Public headers (if library)
-│   └── myproject/
-│       └── api.h
-│
-├── tests/                            # Unit tests
-│   ├── CMakeLists.txt
-│   ├── core/
-│   │   ├── test_api.cpp
-│   │   └── test_types.cpp
-│   ├── network/
-│   │   ├── test_server.cpp
-│   │   └── test_client.cpp
-│   └── test_main.cpp
-│
-├── benchmarks/                       # Performance benchmarks
-│   ├── CMakeLists.txt
-│   ├── benchmark_throughput.cpp
-│   └── benchmark_latency.cpp
-│
-├── tools/                            # Development tools
-│   ├── codegen/
-│   │   └── generator.cpp
-│   └── debug/
-│       └── inspector.cpp
-│
-├── examples/                         # Example usage
-│   ├── CMakeLists.txt
-│   ├── basic_server/
-│   │   └── main.cpp
-│   └── advanced_client/
-│       └── main.cpp
-│
-├── docs/                             # Documentation
-│   ├── Doxyfile.in
-│   └── api/
-│
-├── scripts/                          # Helper scripts
-│   ├── run-tests.sh
-│   ├── build-docs.sh
-│   └── format-code.sh
-│
-├── config.h.in                       # Configuration header template
-└── .clang-format                     # Code formatting rules
+ CMakeLists.txt                    # Root orchestrator
+ CMakePresets.json                 # Configuration presets
+ .gitignore                        # Git ignore
+ README.md                         # Project documentation
+ LICENSE                           # License file
+
+ cmake/                            # CMake modules
+    compiler.cmake                # Compiler detection & flags
+    options.cmake                 # Feature options
+    dependencies.cmake            # External dependencies
+    testing.cmake                 # CTest integration
+    install.cmake                 # Installation rules
+    Utils.cmake                   # Helper macros
+    toolchain.cmake               # Platform detection
+    FindModules/                  # Custom find_package modules
+       FindCustomLib.cmake
+       FindOtherLib.cmake
+    CPack/                        # Packaging configurations
+        CPackOptions.cmake
+        CPackConfig.cmake
+
+ src/                              # Source code
+    CMakeLists.txt                # Sources root
+    core/                         # Core module
+       CMakeLists.txt
+       include/
+          core/
+              api.h
+              types.h
+       src/
+           api.cpp
+           types.cpp
+    network/                      # Network module
+       CMakeLists.txt
+       include/network/
+          server.h
+          client.h
+       src/
+           server.cpp
+           client.cpp
+    app/                          # Main executable
+        CMakeLists.txt
+        main.cpp
+
+ include/                          # Public headers (if library)
+    myproject/
+        api.h
+
+ tests/                            # Unit tests
+    CMakeLists.txt
+    core/
+       test_api.cpp
+       test_types.cpp
+    network/
+       test_server.cpp
+       test_client.cpp
+    test_main.cpp
+
+ benchmarks/                       # Performance benchmarks
+    CMakeLists.txt
+    benchmark_throughput.cpp
+    benchmark_latency.cpp
+
+ tools/                            # Development tools
+    codegen/
+       generator.cpp
+    debug/
+        inspector.cpp
+
+ examples/                         # Example usage
+    CMakeLists.txt
+    basic_server/
+       main.cpp
+    advanced_client/
+        main.cpp
+
+ docs/                             # Documentation
+    Doxyfile.in
+    api/
+
+ scripts/                          # Helper scripts
+    run-tests.sh
+    build-docs.sh
+    format-code.sh
+
+ config.h.in                       # Configuration header template
+ .clang-format                     # Code formatting rules
 ```
 
 ---
@@ -867,8 +867,8 @@ graph TD
     
     subgraph "Enforcement"
         F1 & F2 & F3 & F4 & F5 --> CI[CI checks diff]
-        CI --> SAME[Same binary → pass]
-        CI --> DIFF[Different → fail]
+        CI --> SAME[Same binary  pass]
+        CI --> DIFF[Different  fail]
     end
 ```
 
@@ -1051,12 +1051,12 @@ graph TB
 ```mermaid
 graph TD
     START[CI Build Starts] --> TRY1[Try: Full Release build with LTO]
-    TRY1 -->|Succeeds| DONE[✓ Build success]
+    TRY1 -->|Succeeds| DONE[[PASS] Build success]
     TRY1 -->|Fails| TRY2[Fallback: Release without LTO]
-    TRY2 -->|Succeeds| WARN[⚠ Partial success, alert]
+    TRY2 -->|Succeeds| WARN[[WARN] Partial success, alert]
     TRY2 -->|Fails| TRY3[Fallback: Debug build]
-    TRY3 -->|Succeeds| WARN2[⚠ Debug only success, page]
-    TRY3 -->|Fails| FAIL[❌ Build failed, page on-call]
+    TRY3 -->|Succeeds| WARN2[[WARN] Debug only success, page]
+    TRY3 -->|Fails| FAIL[[FAIL] Build failed, page on-call]
 ```
 
 ### 14.3 Recovery Strategies
@@ -1242,10 +1242,10 @@ sequenceDiagram
     CTest-->>Dev: Test results (pass/fail)
     
     Dev->>CMake: cmake --install build --prefix /usr/local
-    CMake->>FS: Copy bin/webserver → /usr/local/bin
-    CMake->>FS: Copy lib/*.a → /usr/local/lib
-    CMake->>FS: Copy include/ → /usr/local/include
-    CMake->>FS: Copy cmake/MyProjectConfig.cmake → /usr/local/lib/cmake
+    CMake->>FS: Copy bin/webserver  /usr/local/bin
+    CMake->>FS: Copy lib/*.a  /usr/local/lib
+    CMake->>FS: Copy include/  /usr/local/include
+    CMake->>FS: Copy cmake/MyProjectConfig.cmake  /usr/local/lib/cmake
 ```
 
 ### 16.2 Dependency Resolution Sequence
@@ -1439,14 +1439,14 @@ graph TD
 
 | Feature | Speedup | Complexity | ROI | Decision |
 |---------|---------|------------|-----|----------|
-| Unity builds | 2-3x | Low | High | ✅ Enable |
-| ccache | 10x (clean rebuild) | Low | High | ✅ Enable |
-| Precompiled headers | 50% | Medium | High | ✅ Use |
-| ThinLTO | 10-15% | Medium | Medium | ✅ Release only |
-| mold linker | 2-10x (link) | Low | High | ✅ Use if available |
-| Distcc | 2-4x (many files) | High | Medium | ⏸ Defer |
-| PGO (Profile Guided) | 15% | High | Low | ⏸ Defer for critical only |
-| Custom CMake macros | 0-5% | High | Very Low | ❌ Use standard patterns |
+| Unity builds | 2-3x | Low | High | [PASS] Enable |
+| ccache | 10x (clean rebuild) | Low | High | [PASS] Enable |
+| Precompiled headers | 50% | Medium | High | [PASS] Use |
+| ThinLTO | 10-15% | Medium | Medium | [PASS] Release only |
+| mold linker | 2-10x (link) | Low | High | [PASS] Use if available |
+| Distcc | 2-4x (many files) | High | Medium |  Defer |
+| PGO (Profile Guided) | 15% | High | Low |  Defer for critical only |
+| Custom CMake macros | 0-5% | High | Very Low | [FAIL] Use standard patterns |
 
 ### 20.3 Binary Size vs Build Time Tradeoff
 
@@ -1559,7 +1559,7 @@ graph LR
 
 ### 23.4 Worst-Case Production Failure Example
 
-**Issue:** CI builds suddenly take 3x longer (30 min → 90 min)
+**Issue:** CI builds suddenly take 3x longer (30 min  90 min)
 
 **Investigation:**
 - `ccache -s` showed 5% hit rate (was 85%)
@@ -1567,7 +1567,7 @@ graph LR
 
 **Root Cause:**
 - `config.h` generated with timestamp macro `__TIME__`
-- Changed on every build → invalidated all ccache entries
+- Changed on every build  invalidated all ccache entries
 - All headers included `config.h` (bad include hygiene)
 
 **Fix:**
@@ -1851,13 +1851,13 @@ cpack --config build-release/CPackConfig.cmake -B build-release/package
 
 The **CMake Production Template** provides:
 
-1. **Complete build system** — Multi-file project with libraries, executables, tests
-2. **Production optimization** — Unity builds, PCH, LTO, ccache integration
-3. **Cross-platform support** — Linux (epoll), macOS (kqueue), Windows (IOCP)
-4. **Dependency management** — find_package + FetchContent fallback
-5. **Testing & quality** — CTest integration, sanitizers, coverage
-6. **Packaging & deployment** — CPack for TGZ, DEB, RPM, NSIS
-7. **Zero cost** — All tools open source, runs on any developer machine
+1. **Complete build system**  Multi-file project with libraries, executables, tests
+2. **Production optimization**  Unity builds, PCH, LTO, ccache integration
+3. **Cross-platform support**  Linux (epoll), macOS (kqueue), Windows (IOCP)
+4. **Dependency management**  find_package + FetchContent fallback
+5. **Testing & quality**  CTest integration, sanitizers, coverage
+6. **Packaging & deployment**  CPack for TGZ, DEB, RPM, NSIS
+7. **Zero cost**  All tools open source, runs on any developer machine
 
 **The template is ready to use, reusable across projects, and follows industry best practices from LLVM, Qt, ClickHouse, and Google.**
 

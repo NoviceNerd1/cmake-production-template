@@ -1,11 +1,11 @@
 #=============================================================================
-# Utils.cmake — Reusable Helper Functions
+# Utils.cmake --- Reusable Helper Functions
 # Provides:
-#   add_project_library()       — create a library with sane defaults
-#   add_project_executable()    — create an executable with sane defaults
-#   target_enable_unity_build() — opt-in unity build per target
-#   target_enable_pch()         — precompiled headers per target
-#   target_enable_sanitizers()  — apply active sanitizer flags per target (extra)
+#   add_project_library()       --- create a library with sane defaults
+#   add_project_executable()    --- create an executable with sane defaults
+#   target_enable_unity_build() --- opt-in unity build per target
+#   target_enable_pch()         --- precompiled headers per target
+#   target_enable_sanitizers()  --- apply active sanitizer flags per target (extra)
 #=============================================================================
 
 #-----------------------------------------------------------------------------

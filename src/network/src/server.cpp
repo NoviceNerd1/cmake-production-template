@@ -11,7 +11,7 @@
 
 namespace myproject {
 
-Server::Server(int port)
+Server::Server(uint16_t port)
     : port_(port), listen_fd_(-1), running_(false)
 {
     spdlog::info("Server: created on port {}", port_);

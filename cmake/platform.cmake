@@ -90,7 +90,7 @@ elseif(PLATFORM_WINDOWS)
 endif()
 
 #-----------------------------------------------------------------------------
-# ccache — transparent compiler cache
+# ccache --- transparent compiler cache
 #-----------------------------------------------------------------------------
 if(ENABLE_CCACHE)
     find_program(CCACHE_PROGRAM ccache)
@@ -102,7 +102,7 @@ if(ENABLE_CCACHE)
         set(ENV{CCACHE_HARDLINK}   "true")
         message(STATUS "ccache: ${CCACHE_PROGRAM}")
     else()
-        message(STATUS "ccache: not found — builds will not be cached")
+        message(STATUS "ccache: not found --- builds will not be cached")
     endif()
 endif()
 
@@ -113,7 +113,7 @@ include(ProcessorCount)
 ProcessorCount(NPROC)
 if(NPROC EQUAL 0)
     set(NPROC 4)
-    message(STATUS "CPU cores: unknown — defaulting to ${NPROC}")
+    message(STATUS "CPU cores: unknown --- defaulting to ${NPROC}")
 else()
     message(STATUS "CPU cores: ${NPROC}")
 endif()

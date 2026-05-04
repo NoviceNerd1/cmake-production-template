@@ -1,5 +1,5 @@
 #=============================================================================
-# Testing Configuration — GoogleTest + CTest integration
+# Testing Configuration --- GoogleTest + CTest integration
 #=============================================================================
 
 # Enable CTest (must be called before any add_test())
@@ -132,6 +132,6 @@ if(ENABLE_COVERAGE AND PLATFORM_LINUX)
         )
         message(STATUS "Coverage target 'coverage' available")
     else()
-        message(WARNING "lcov/genhtml not found — 'coverage' target disabled")
+        message(WARNING "lcov/genhtml not found --- 'coverage' target disabled")
     endif()
 endif()

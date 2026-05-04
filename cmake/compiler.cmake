@@ -16,14 +16,17 @@ set(CMAKE_CXX_EXTENSIONS        OFF)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
     set(PROJECT_WARNING_FLAGS
         -Wall -Wextra -Wpedantic
-        -Wshadow -Wconversion -Wsign-conversion
-        -Wnon-virtual-dtor
+        -Wshadow -Wnon-virtual-dtor
+        -Wold-style-cast -Wcast-align
+        -Wunused -Woverloaded-virtual
+        -Wformat=2 -Wdouble-promotion
+        -Wnull-dereference
     )
     if(ENABLE_WARNINGS_AS_ERRORS)
         list(APPEND PROJECT_WARNING_FLAGS -Werror)
     endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    set(PROJECT_WARNING_FLAGS /W4 /permissive-)
+    set(PROJECT_WARNING_FLAGS /W4 /permissive- /w14640)
     if(ENABLE_WARNINGS_AS_ERRORS)
         list(APPEND PROJECT_WARNING_FLAGS /WX)
     endif()

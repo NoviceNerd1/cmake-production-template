@@ -60,3 +60,7 @@ Thumbs.db
 # Dependencies (if vendored)
 _deps/
 downloads/
+
+# Local validation & install
+test-install/
+validation_full.log

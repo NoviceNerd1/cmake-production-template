@@ -1,5 +1,5 @@
 #=============================================================================
-# Installation Rules — GNU standard directories
+# Installation Rules --- GNU standard directories
 # Installs: binaries, libraries, headers, CMake config, docs, and license.
 #=============================================================================
 include(GNUInstallDirs)

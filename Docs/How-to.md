@@ -1,10 +1,10 @@
 # How-To: Build a Production CMake Template From Scratch
 
-> Step-by-step reproduction guide — every command and file I created, in exact order.
+> Step-by-step reproduction guide  every command and file I created, in exact order.
 
 ---
 
-## Phase 1 — Scaffolding & Configuration (Day 1-2)
+## Phase 1  Scaffolding & Configuration (Day 1-2)
 
 ### 1.1 Directory Structure
 Create the following structure to ensure modularity:
@@ -26,7 +26,7 @@ Create `CMakePresets.json` to define your build environments:
 
 ---
 
-## Phase 2 — Compiler & Build Logic (Day 3-4)
+## Phase 2  Compiler & Build Logic (Day 3-4)
 
 ### 2.1 Compiler Standards (`cmake/compiler.cmake`)
 - Set `CMAKE_CXX_STANDARD 20`.
@@ -43,7 +43,7 @@ Create `CMakePresets.json` to define your build environments:
 
 ---
 
-## Phase 3 — Target Definitions (Day 5-6)
+## Phase 3  Target Definitions (Day 5-6)
 
 ### 3.1 Project Macros (`cmake/Utils.cmake`)
 Define `add_project_library` and `add_project_executable`.
@@ -65,7 +65,7 @@ target_enable_unity_build(core)
 
 ---
 
-## Phase 4 — Automation & CI/CD (Day 7-9)
+## Phase 4  Automation & CI/CD (Day 7-9)
 
 ### 4.1 Validation Script (`scripts/validate.sh`)
 Create a script that cleans, builds, and tests everything (Dev, Release, Examples, Benchmarks, Install).

@@ -2,7 +2,7 @@
 
 namespace myproject {
 
-const char* get_version() noexcept {
+std::string_view get_version() noexcept {
     return VersionString;
 }
 

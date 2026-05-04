@@ -74,7 +74,7 @@ if(BUILD_DOCS)
     find_package(Doxygen QUIET)
     if(DOXYGEN_FOUND)
         configure_file(
-            "${CMAKE_SOURCE_DIR}/docs/Doxyfile.in"
+            "${CMAKE_SOURCE_DIR}/Docs/Doxyfile.in"
             "${CMAKE_BINARY_DIR}/Doxyfile"
             @ONLY
         )

@@ -23,7 +23,7 @@ TEST(NetworkServerTest, StartSetsRunning) {
 
 TEST(NetworkServerTest, StopClearsRunning) {
     myproject::Server s(9996);
-    s.start();
+    EXPECT_TRUE(s.start());
     s.stop();
     EXPECT_FALSE(s.is_running());
 }

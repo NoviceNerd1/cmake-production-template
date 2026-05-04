@@ -10,12 +10,11 @@ TEST(CoreVersionTest, MajorIsPositive) {
 }
 
 TEST(CoreVersionTest, VersionStringNotEmpty) {
-    EXPECT_NE(myproject::VersionString, nullptr);
-    EXPECT_GT(std::string(myproject::VersionString).size(), 0u);
+    EXPECT_FALSE(myproject::VersionString.empty());
 }
 
 TEST(CoreVersionTest, GetVersionMatchesConstant) {
-    EXPECT_STREQ(myproject::get_version(), myproject::VersionString);
+    EXPECT_EQ(myproject::get_version(), myproject::VersionString);
 }
 
 // ---------------------------------------------------------------------------
@@ -23,16 +22,16 @@ TEST(CoreVersionTest, GetVersionMatchesConstant) {
 // ---------------------------------------------------------------------------
 TEST(CoreTypesTest, ResultSuccess) {
     auto r = myproject::Result<int>::success(42);
-    EXPECT_TRUE(r.ok);
-    EXPECT_EQ(r.value, 42);
-    EXPECT_TRUE(r.error.empty());
+    EXPECT_TRUE(r.has_value());
+    EXPECT_EQ(r.value(), 42);
+    EXPECT_TRUE(r.error().empty());
     EXPECT_TRUE(static_cast<bool>(r));
 }
 
 TEST(CoreTypesTest, ResultFailure) {
     auto r = myproject::Result<int>::failure("something went wrong");
-    EXPECT_FALSE(r.ok);
-    EXPECT_EQ(r.error, "something went wrong");
+    EXPECT_FALSE(r.has_value());
+    EXPECT_EQ(r.error(), "something went wrong");
     EXPECT_FALSE(static_cast<bool>(r));
 }
 

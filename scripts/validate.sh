@@ -9,13 +9,13 @@ PASS=0; FAIL=0
 run_step() {
     local desc="$1"; shift
     echo ""
-    echo ">>> $desc"
+    echo "STEP: $desc"
     # Use || true to prevent set -e from killing the script on ((VAR++)) return 1
     if "$@"; then
-        echo "    [PASS] $desc"
+        echo "RESULT: [PASS] $desc"
         PASS=$((PASS + 1))
     else
-        echo "    [FAIL] $desc"
+        echo "RESULT: [FAIL] $desc"
         FAIL=$((FAIL + 1))
     fi
 }
@@ -56,7 +56,7 @@ run_step "CPack tarball" bash -c "
 
 echo ""
 echo "========================================"
-echo "Results: ${PASS} passed, ${FAIL} failed"
+echo "Final Results: ${PASS} passed, ${FAIL} failed"
 echo "========================================"
 
 if [ "$FAIL" -gt 0 ]; then
