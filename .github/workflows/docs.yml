@@ -1,0 +1,29 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
+
+      - name: Configure and Build Docs
+        run: |
+          cmake -B build -DBUILD_DOCS=ON
+          cmake --build build --target docs
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/docs/html

@@ -427,6 +427,37 @@ git commit -m "Day 6: documentation, examples, benchmarks"
 ```
 
 ---
+---
+
+## Phase 8 — CI/CD Automation & GitHub Integration *(Day 8)*
+
+### Step 8.1 — GitHub Secrets & PAT
+If you want the workflows to push to other repositories or perform actions requiring higher permissions, add your **GitHub PAT** as a secret named `MY_GITHUB_PAT`. 
+By default, the workflows use the built-in `${{ secrets.GITHUB_TOKEN }}` which is sufficient for:
+- Creating releases on the current repo.
+- Publishing to GitHub Pages on the current repo.
+
+### Step 8.2 — Automated Releases (`release.yml`)
+The project is configured to automatically create a GitHub Release whenever you push a version tag (e.g., `git tag v1.1.0 && git push --tags`).
+- **Builds** in Release mode.
+- **Packages** the binaries into a `.tar.gz` using CPack.
+- **Uploads** the package to the new Release.
+
+### Step 8.3 — API Documentation (`docs.yml`)
+Every push to `main` triggers the documentation workflow:
+- **Generates** HTML documentation using Doxygen.
+- **Publishes** the results to the `gh-pages` branch.
+- **View it at:** `https://<user>.github.io/<repo>/`
+
+### Step 8.4 — Validation Pipeline
+The `ci.yml` now includes a `validation` job that runs `scripts/validate.sh`. This ensures that:
+1. Dev build + tests pass.
+2. Release build succeeds.
+3. Examples build correctly.
+4. Install logic works.
+5. CPack can generate a valid package.
+
+---
 
 ## Phase 7 — CI/CD & Validation Scripts  *(Day 7)*
 
