@@ -1,0 +1,75 @@
+#pragma once
+
+//=============================================================================
+// config.h  —  Generated at configure time by CMake.
+// DO NOT edit directly.  Edit config.h.in and re-run cmake.
+//=============================================================================
+
+//-----------------------------------------------------------------------------
+// Project version
+//-----------------------------------------------------------------------------
+#define @PROJECT_NAME@_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define @PROJECT_NAME@_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define @PROJECT_NAME@_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define @PROJECT_NAME@_VERSION       "@PROJECT_VERSION@"
+
+//-----------------------------------------------------------------------------
+// Git metadata
+//-----------------------------------------------------------------------------
+#define @PROJECT_NAME@_GIT_COMMIT_HASH "@GIT_COMMIT_HASH@"
+#define @PROJECT_NAME@_GIT_COMMIT_DATE "@GIT_COMMIT_DATE@"
+
+//-----------------------------------------------------------------------------
+// Build type (compile-time string)
+//-----------------------------------------------------------------------------
+#ifdef NDEBUG
+    #define @PROJECT_NAME@_BUILD_TYPE "Release"
+#else
+    #define @PROJECT_NAME@_BUILD_TYPE "Debug"
+#endif
+
+//-----------------------------------------------------------------------------
+// Feature flags (set by cmake/options.cmake)
+//-----------------------------------------------------------------------------
+#cmakedefine @PROJECT_NAME@_ENABLE_SSL      1
+#cmakedefine @PROJECT_NAME@_ENABLE_ZLIB     1
+#cmakedefine @PROJECT_NAME@_ENABLE_WEBSOCKET 1
+#cmakedefine @PROJECT_NAME@_ENABLE_CACHE    1
+
+//-----------------------------------------------------------------------------
+// Compiler detection  (done at pre-process time, not configure time)
+//-----------------------------------------------------------------------------
+#if defined(__clang__)
+    #define @PROJECT_NAME@_COMPILER_CLANG 1
+    #define @PROJECT_NAME@_COMPILER_VERSION __clang_major__
+#elif defined(__GNUC__)
+    #define @PROJECT_NAME@_COMPILER_GCC 1
+    #define @PROJECT_NAME@_COMPILER_VERSION __GNUC__
+#elif defined(_MSC_VER)
+    #define @PROJECT_NAME@_COMPILER_MSVC 1
+    #define @PROJECT_NAME@_COMPILER_VERSION _MSC_VER
+#endif
+
+//-----------------------------------------------------------------------------
+// Platform detection
+//-----------------------------------------------------------------------------
+#if defined(__linux__)
+    #define @PROJECT_NAME@_PLATFORM_LINUX 1
+#elif defined(__APPLE__)
+    #define @PROJECT_NAME@_PLATFORM_MACOS 1
+#elif defined(_WIN32)
+    #define @PROJECT_NAME@_PLATFORM_WINDOWS 1
+#endif
+
+//-----------------------------------------------------------------------------
+// Performance tuning constants (from CMake cache)
+//-----------------------------------------------------------------------------
+#define @PROJECT_NAME@_MAX_CONNECTIONS @MAX_CONNECTION_COUNT@
+#define @PROJECT_NAME@_STAT_CACHE_TTL  @STAT_CACHE_TTL@
+#define @PROJECT_NAME@_IO_BUFFER_SIZE  @IO_BUFFER_SIZE@
+
+//-----------------------------------------------------------------------------
+// Compiler feature support  (from cmake/features.h.in)
+//-----------------------------------------------------------------------------
+#define @PROJECT_NAME@_HAVE_THREAD_LOCAL 1
+#define @PROJECT_NAME@_HAVE_CONSTEXPR    1

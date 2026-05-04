@@ -1,0 +1,1 @@
+# List Each step you take while creating and developing this project, so i can follow it as guide and reproduce it myself, later.

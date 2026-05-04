@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # --------------------------------------------------------------------------
+  # Matrix build: Linux + macOS, Debug + Release
+  # --------------------------------------------------------------------------
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-13]
+        build_type: [Debug, Release]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y ninja-build lcov
+
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install ninja
+
+    - name: Configure CMake
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DBUILD_TESTING=ON \
+          -DBUILD_EXAMPLES=ON \
+          -DENABLE_WARNINGS_AS_ERRORS=OFF
+
+    - name: Build
+      run: cmake --build build --parallel
+
+    - name: Run tests
+      run: ctest --test-dir build --output-on-failure
+
+    - name: Upload binary (Linux Release)
+      if: runner.os == 'Linux' && matrix.build_type == 'Release'
+      uses: actions/upload-artifact@v4
+      with:
+        name: myapp-linux
+        path: build/myapp
+
+  # --------------------------------------------------------------------------
+  # Sanitizer build (Linux only)
+  # --------------------------------------------------------------------------
+  sanitizers:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install
+      run: sudo apt-get install -y ninja-build
+    - name: Configure (ASAN + UBSAN)
+      run: |
+        cmake -B build-asan -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_TESTING=ON \
+          -DENABLE_ASAN=ON \
+          -DENABLE_UBSAN=ON
+    - name: Build
+      run: cmake --build build-asan --parallel
+    - name: Test
+      run: ctest --test-dir build-asan --output-on-failure
+
+  # --------------------------------------------------------------------------
+  # Coverage (Linux only)
+  # --------------------------------------------------------------------------
+  coverage:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install
+      run: sudo apt-get install -y ninja-build lcov
+    - name: Configure
+      run: |
+        cmake -B build-cov -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DBUILD_TESTING=ON \
+          -DENABLE_COVERAGE=ON
+    - name: Build
+      run: cmake --build build-cov --parallel
+    - name: Test
+      run: ctest --test-dir build-cov
+    - name: Generate coverage
+      run: |
+        lcov --capture --directory build-cov \
+             --output-file coverage.info --no-external
+        lcov --remove coverage.info '/usr/*' '*/tests/*' '*/_deps/*' \
+             --output-file coverage_filtered.info
+        lcov --list coverage_filtered.info
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        files: coverage_filtered.info

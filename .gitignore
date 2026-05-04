@@ -1,0 +1,62 @@
+# Build directories
+build/
+build-*/
+out/
+
+# CMake artifacts
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+*.cmake
+!CMakeLists.txt
+!cmake/Find*.cmake
+!cmake/Utils.cmake
+!cmake/*.cmake
+!cmake/CPack/*.cmake
+
+# Generated files
+config.h
+*.pb.h
+*.pb.cc
+
+# Object files
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+
+# Executables
+webserver
+myapp
+test_runner
+benchmark_*
+basic_server
+
+# Debug & profiles
+*.gdb_history
+*.profraw
+*.profdata
+*.gcda
+*.gcno
+coverage/
+*.gcov
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies (if vendored)
+_deps/
+downloads/
